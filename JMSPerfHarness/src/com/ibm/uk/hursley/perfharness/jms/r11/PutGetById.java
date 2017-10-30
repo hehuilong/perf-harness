@@ -110,6 +110,7 @@ public class PutGetById extends JMS11WorkerThread implements WorkerThread.Paceab
 			if ( transacted && (getIterations()+1)%commitCount==0 ) session.commit();
 			incIterations();
 		}
+		if(messageConsumer!=null) messageConsumer.close();
 		
 		return true;
 	}
