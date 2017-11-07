@@ -10,6 +10,7 @@
 package com.ibm.uk.hursley.perfharness.jms.r11;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import javax.jms.Connection;
@@ -130,6 +131,31 @@ public abstract class JMS11WorkerThread extends WorkerThread {
         Log.logger.log(Level.FINE, "Making connection" );
         connection = jmsProvider.getConnection( cf, this, String.valueOf( this.getThreadNum() ) );
         connection.start();
+        Log.logger.log(Level.FINE, "Connection started {0}",connection );
+
+        session = connection.createSession( transacted, Config.parms.getInt("am") ); // acknowledge
+        Log.logger.log(Level.FINE, "Session started {0}",session );    	
+	
+    }
+    
+	/**
+	 * Creates and sets the JMS connection and session variables.
+	 * @throws Exception
+	 */
+    protected void buildJMSResources(boolean toDestroy, String connId) throws Exception {
+    	
+    	if(toDestroy) destroyJMSResources(true);
+    	
+        if ( cf==null ) {
+        	Log.logger.log(Level.FINE, "Getting ConnectionFactory");
+	        cf = jmsProvider.lookupConnectionFactory(null);
+        }
+    	
+        Log.logger.log(Level.FINE, "Making connection" );
+        connection = jmsProvider.getConnection( cf, this, connId );
+        //System.out.println("starting conn");
+        connection.start();
+        //System.out.println("started conn");
         Log.logger.log(Level.FINE, "Connection started {0}",connection );
 
         session = connection.createSession( transacted, Config.parms.getInt("am") ); // acknowledge

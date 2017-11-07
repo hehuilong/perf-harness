@@ -207,9 +207,11 @@ public abstract class AbstractJMSProvider implements JMSProvider {
 	 */
 	public void setDurableConnectionId( Connection c, WorkerThread worker, String uniqueID ) throws JMSException {
 		
+		final Boolean ncc = Config.parms.getBoolean("ncc");
+		
 		String durableConnectionId;
 		
-		if ( worker==null ) {
+		if ( worker==null || ncc) {
 			durableConnectionId = createDurableConnectionId(uniqueID);
 		} else {
 		
@@ -248,6 +250,7 @@ public abstract class AbstractJMSProvider implements JMSProvider {
 			// this, but better than nothing ) 
 			durableConnectionId = new UID().toString().replaceAll(":", "");
 		}
+		//System.out.println("Conn id generated: "+durableConnectionId);
 		return durableConnectionId;
 	}
 	
