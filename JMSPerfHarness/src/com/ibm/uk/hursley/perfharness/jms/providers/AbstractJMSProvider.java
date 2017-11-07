@@ -128,7 +128,7 @@ public abstract class AbstractJMSProvider implements JMSProvider {
 		final QueueConnection qc;
 		final String username = Config.parms.getString("us");
 		if (username != null && username.length() != 0) {
-			Log.logger.log(Level.INFO, "getQueueConnection(): authenticating as \"" + username + "\"");
+			//Log.logger.log(Level.INFO, "getQueueConnection(): authenticating as \"" + username + "\"");
 			final String password = Config.parms.getString("pw");
 			qc = qcf.createQueueConnection(username, password);
 		} else {
@@ -148,7 +148,7 @@ public abstract class AbstractJMSProvider implements JMSProvider {
 		final TopicConnection tc;
 		final String username = Config.parms.getString("us");
 		if (username != null && username.length() != 0) {
-			Log.logger.log(Level.INFO, "getTopicConnection(): authenticating as \"" + username + "\"");
+			//Log.logger.log(Level.INFO, "getTopicConnection(): authenticating as \"" + username + "\"");
 			final String password = Config.parms.getString("pw");
 			tc = tcf.createTopicConnection(username, password);
 		} else {
@@ -179,7 +179,7 @@ public abstract class AbstractJMSProvider implements JMSProvider {
 		final String username = Config.parms.getString("us");
 
 		if (username != null && username.length() != 0) {
-			Log.logger.log(Level.INFO, "getConnection_internal(): authenticating as \"" + username + "\"");
+			//Log.logger.log(Level.INFO, "getConnection_internal(): authenticating as \"" + username + "\"");
 			final String password = Config.parms.getString("pw");
 			c = cf.createConnection(username, password);
 		} else {
